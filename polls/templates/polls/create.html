@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="modal-header">
+       <h5 class="modal-title">Add new student</h5>
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </button>
+</div>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form action = "{% url 'polls:add' %}" method = "post">
+  <div class="modal-body">
+    {% csrf_token %}
+    <div class="row">
+     <div class="col-12">
+       {{ form.registration_number|as_crispy_field }}
+     </div>
+     <div class="col-6">
+       {{ form.name|as_crispy_field }}
+     </div>
+     <div class="col-6">
+       {{ form.email|as_crispy_field }}
+     </div>
+     <div class="col-6">
+       {{ form.home_town|as_crispy_field }}
+     </div>
+     <div class="col-6">
+       {{ form.date_of_birth|as_crispy_field }}
+     </div>
+     <div class="col-12">
+       {{ form.score|as_crispy_field }}
+     </div>
+   </div>
+   <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+   </div>
+   </div>
+</form>
+{% endblock %}

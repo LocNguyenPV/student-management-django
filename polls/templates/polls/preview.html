@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="modal-header">
+   <h5 class="modal-title">Preview</h5>
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </button>
+</div>
+  <div class="modal-body">
+    <div class="card-body row">
+      <div class="col-4" >
+  <img src="https://th.bing.com/th/id/R6e0f2f6bab06c008c79a3b280db49342?rik=jsupiHsPJSF3lA&riu=http%3a%2f%2fassets0.prcdn.com%2fuk%2fpeople%2fdefault-profile.png%3f1406639312&ehk=fgzMewvFjuDc4jTAGFrQAJ%2fhZD3vLHtzxhxb%2bnle3cU%3d&risl=&pid=ImgRaw" class="card-img-top avatar" alt="...">
+</div>
+
+<div class="col-8 ">
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <th scope="row">Name:</th>
+        <td>{{student.name}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Registration Number:</th>
+        <td>{{student.registration_number}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Email:</th>
+        <td>{{student.email}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Home town:</th>
+        <td>{{student.home_town}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Date of Birth:</th>
+        <td>{{student.date_of_birth}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Score:</th>
+        <td>{{student.score}} / 100</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+<div class="modal-footer">
+       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+</div>
+{% endblock %}

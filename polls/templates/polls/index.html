@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- <a href={% url 'polls:create'%}>Add new student</a> -->
+  <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Student Django</h1>
+    <p class="lead">This is a first my django project</p>
+  </div>
+</div>
+
+<div class="d-flex flex-row-reverse bd-highlight">
+<a href="#" id="btnAdd" title="Add new student">
+    <i class="fas fa-user-plus"></i>
+</a>
+</div>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Home town</th>
+        <th scope="col">Score</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if list_student %}
+      {% for student in list_student %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ student.name }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.home_town }}</td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="color: black; width: {{student.score}}%"  aria-valuenow={{student.score}} aria-valuemin="0" aria-valuemax="100">{{student.score}}</div>
+              </div>
+            </td>
+            <td>
+                <a title="Preview" class="s-preview" data-id={{student.registration_number}} href="#">
+                  <i class="fas fa-eye"></i>
+                </a>
+                <a title="Edit" class="s-edit" data-id={{student.registration_number}} href="#">
+                  <i class="fas fa-user-edit"></i>
+                </a>
+                <a title="Delete" href={% url 'polls:delete' student.registration_number %}>
+                  <i class="fas fa-trash-alt"></i>
+                </a>
+            </td>
+          </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+        <th scope="row" colspan="4">No students are available.</th>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+<div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" id="modalBody">
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  function openModal(url){
+    $.ajax({url: url, success: function(result){
+      $("#modalBody").html(result);
+      $('#studentModal').modal();
+    }});
+  }
+  $("#btnAdd").click(function(){
+    const url = window.reverse('polls:create');
+    openModal(url);
+  });
+  $(".s-preview").click(function(e){
+    let id = this.getAttribute('data-id');
+    const url = window.reverse('polls:preview', id);
+    openModal(url);
+  });
+  $(".s-edit").click(function(e){
+    let id = this.getAttribute('data-id');
+    const url = window.reverse('polls:detail', id);
+    openModal(url);
+  });
+</script>
+{% endblock %}
