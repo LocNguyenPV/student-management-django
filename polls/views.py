@@ -43,10 +43,14 @@ def edit(request, registration_number):
         model.modify_date = datetime.now()
         model.save()
     except (KeyError):
-        # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-        'error_message': "This is not your fault, it is my fault!",
-        })
+        student = get_object_or_404(Student, pk=registration_number)
+        context['title'] =  "Edit " + student.name
+        context['registration_number'] =  student.registration_number
+        edit_form = InputForm(instance=student)
+        edit_form.fields['registration_number'].widget.attrs['readonly'] = True
+        context['form']= edit_form
+        context['error_message']= "This is not your fault, it is my fault!"
+        return render(request, 'polls/detail.html', context)
     return HttpResponseRedirect(reverse('polls:index'))
 
 def delete(request, registration_number):
@@ -72,7 +76,8 @@ def add(request):
             # user hits the Back button.
         except (KeyError):
             # Redisplay the question voting form.
-            return render(request, 'polls/create.html', {
-            'error_message': "This is not your fault, it is my fault!",
-            })
+            context ={}
+            context['form']= InputForm()
+            context['error_message']= "This is not your fault, it is my fault!"
+            return render(request, 'polls/create.html', context)
         return HttpResponseRedirect(reverse('polls:index'))
